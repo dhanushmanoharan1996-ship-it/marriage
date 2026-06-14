@@ -668,7 +668,7 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-off
   </div>
   <div class="share-row reveal">
     <span class="share-label">Share</span>
-    <button class="share-btn share-wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('You are cordially invited to the wedding of Dhanush & Pavithra on 02 July 2026 at Guruvayur Temple. Visit our wedding website for full details.'),'_blank')">
+    <button class="share-btn share-wa" onclick="window.open('https://wa.me/?text='+encodeURIComponent('You are cordially invited to the wedding of Dhanush & Pavithra on 02 July 2026 at Guruvayur Temple, Thrissur, Kerala.\n\nVisit our wedding website for full details, venue directions & more:\nhttps://dhanushpavithra.com'),'_blank')">
       <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
       WhatsApp
     </button>
@@ -840,7 +840,12 @@ document.getElementById('lb').addEventListener('click',e=>{if(e.target.id==='lb'
 
 /* ── COPY LINK ── */
 function copyLink(){
-  navigator.clipboard.writeText(window.location.href).catch(()=>{});
+  navigator.clipboard.writeText('https://dhanushpavithra.com').catch(()=>{
+    const ta=document.createElement('textarea');
+    ta.value='https://dhanushpavithra.com';
+    document.body.appendChild(ta);ta.select();
+    document.execCommand('copy');document.body.removeChild(ta);
+  });
   const t=document.getElementById('copyToast');
   t.style.display='inline';
   setTimeout(()=>t.style.display='none',2500);
@@ -850,35 +855,35 @@ function copyLink(){
 /* ── MUSIC PLAYER (real Audio API) ── */
 const tracks=[
   {
-    title:'Nadaswaram — Navagraha Kritis',
-    style:'Nadaswaram · Traditional Mangalam',
+    title:'Nadaswaram — Classical Recital',
+    style:'Nadaswaram · Traditional Wedding',
     emoji:'🎺',
-    src:'https://archive.org/download/NadaswaramNavagrahaKritis/01NavagrahaKritis-Suryamurthe.mp3'
+    src:'https://archive.org/download/NadaswaramSong/Nadaswaram%20Song%201.mp3'
   },
   {
-    title:'Veena — Raga Kalyani',
-    style:'Veena Instrumental · Carnatic Classical',
-    emoji:'🪕',
-    src:'https://archive.org/download/VeenaRagaKalyani/VeenaRagaKalyani.mp3'
-  },
-  {
-    title:'Carnatic Flute — Raga Bhairavi',
-    style:'Bansuri Flute · Carnatic',
+    title:'Kalyana Melam Nadaswaram',
+    style:'Nadaswaram · Wedding Melam',
     emoji:'🎶',
-    src:'https://archive.org/download/CarnaticFluteBhairavi/CarnaticFluteBhairavi.mp3'
+    src:'https://archive.org/download/HeartMeltingMusicForMarraige/Kalyana%20Melam%20Nadaswaram.mp3'
   },
   {
-    title:'Temple Bells & Chants',
-    style:'Sacred Soundscape · Devotional',
+    title:'Indian Classical Nadaswaram',
+    style:'Nadaswaram · Carnatic Instrumental',
+    emoji:'🪘',
+    src:'https://archive.org/download/HeartMeltingMusicForMarraige/Indian%20Classical%20Music%20Instrumental%20Nadaswaran.mp3'
+  },
+  {
+    title:'Jaya Mangalam',
+    style:'Carnatic · Auspicious Blessing',
     emoji:'🔔',
-    src:'https://archive.org/download/TempleBellsAndChants/TempleBellsChants.mp3'
+    src:'https://archive.org/download/HeartMeltingMusicForMarraige/Jaya%20mangalam.mp3'
   },
   {
-    title:'Sitar — Raga Yaman',
-    style:'Sitar Instrumental · Evening Raga',
-    emoji:'🎻',
-    src:'https://archive.org/download/SitarRagaYaman/SitarRagaYaman.mp3'
-  }
+    title:'Gowri Kalyana Vaibhogame',
+    style:'Carnatic Vocal · Wedding Classic',
+    emoji:'🌸',
+    src:'https://archive.org/download/HeartMeltingMusicForMarraige/Gowri%20Kalyana%20Vaibhogame.mp3'
+  },
 ];
 
 let cur=0, aud=null, seeking=false;
@@ -905,8 +910,9 @@ function createAudio(src){
   });
   aud.addEventListener('ended',()=>nextTrack());
   aud.addEventListener('error',()=>{
-    nowStyle.textContent='⚠ Could not load — trying next track…';
-    setTimeout(()=>nextTrack(),1800);
+    nowStyle.textContent='Could not load track — trying next…';
+    gramRing.classList.remove('spinning');
+    setTimeout(()=>nextTrack(),2000);
   });
 }
 
@@ -919,7 +925,7 @@ function loadTrack(i,autoplay){
   progFill.style.width='0%';
   createAudio(t.src);
   if(autoplay){
-    aud.play().catch(()=>{nowStyle.textContent='⚠ Playback blocked — tap Play to try again.';});
+    aud.play().catch(()=>{nowStyle.textContent='Tap Play to begin.';});
     gramRing.classList.add('spinning');
     playBtn.innerHTML='&#9646;&#9646;';
   } else {
