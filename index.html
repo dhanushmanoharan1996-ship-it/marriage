@@ -754,76 +754,6 @@ img{max-width:100%;display:block;}
   .schedule-grid{grid-template-columns:1fr;gap:2.5rem;}
 }
 
-/* ============ GALLERY ============ */
-.gallery-section{
-  background:var(--beige);
-}
-.gallery-filters{
-  display:flex;
-  gap:0.8rem;
-  justify-content:center;
-  flex-wrap:wrap;
-  margin:2.5rem 0;
-}
-.filter-btn{
-  font-family:var(--font-display);
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  font-size:0.68rem;
-  font-weight:600;
-  padding:0.7rem 1.5rem;
-  border:1px solid var(--temple-gold);
-  border-radius:30px;
-  background:transparent;
-  color:var(--maroon);
-  cursor:pointer;
-  transition:all 0.3s ease;
-}
-.filter-btn.active, .filter-btn:hover{
-  background:var(--maroon);
-  border-color:var(--maroon);
-  color:var(--ivory);
-}
-.masonry{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  grid-auto-rows:120px;
-  gap:1rem;
-}
-.masonry-item{
-  border-radius:6px;
-  background:linear-gradient(135deg,#fff,var(--ivory));
-  border:1px solid rgba(201,162,39,0.3);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;
-  transition:transform 0.4s ease, box-shadow 0.4s ease;
-  overflow:hidden;
-  position:relative;
-  text-align:center;
-  padding:0.5rem;
-}
-.masonry-item:hover{
-  transform:scale(1.03);
-  box-shadow:0 12px 30px rgba(122,16,36,0.12);
-  z-index:2;
-}
-.masonry-item .icon{font-size:1.8rem;color:var(--champagne);}
-.masonry-item .cat-label{
-  font-family:var(--font-display);
-  font-size:0.65rem;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--maroon);
-  margin-top:0.4rem;
-}
-.masonry-item.h2{grid-row:span 2;}
-.masonry-item.w2{grid-column:span 2;}
-
-@media(max-width:760px){
-  .masonry{grid-template-columns:repeat(2,1fr);grid-auto-rows:100px;}
-  .masonry-item.w2{grid-column:span 2;}
-}
-
 /* lightbox */
 .lightbox{
   position:fixed;inset:0;
@@ -1132,7 +1062,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   <div class="nav-logo">D ♥ P</div>
   <div class="nav-links">
     <a href="#celebrations">Celebrations</a>
-    <a href="#gallery">Gallery</a>
     <a href="#wishes">Wishes</a>
     <a href="#travel">Travel</a>
     <a href="#contact">Contact</a>
@@ -1355,25 +1284,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   </div>
 </section>
 
-<!-- GALLERY -->
-<section class="section gallery-section" id="gallery">
-  <div class="center fade-up">
-    <div class="eyebrow">Moments to Treasure</div>
-    <h2 class="section-title">Photo Gallery</h2>
-    <div class="divider"></div>
-  </div>
-  <div class="gallery-filters fade-up">
-    <button class="filter-btn active" data-filter="all">All</button>
-    <button class="filter-btn" data-filter="engagement">Engagement</button>
-    <button class="filter-btn" data-filter="traditional">Traditional Ceremonies</button>
-    <button class="filter-btn" data-filter="family">Family Moments</button>
-    <button class="filter-btn" data-filter="couple">Couple Portraits</button>
-  </div>
-  <div class="masonry fade-up" id="masonry">
-    <!-- items injected by JS -->
-  </div>
-</section>
-
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox">
   <div class="lightbox-content">
@@ -1545,43 +1455,6 @@ function addToCalendar(title, start, end, location, description){
   const url = `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(title)}&dates=${start}/${end}&location=${encodeURIComponent(location)}&details=${encodeURIComponent(description)}`;
   window.open(url, '_blank');
 }
-
-/* ===== GALLERY ===== */
-const galleryItems = [
-  {cat:'engagement', icon:'💍', label:'Engagement Ceremony', size:'w2'},
-  {cat:'traditional', icon:'🪔', label:'Sacred Rituals', size:'h2'},
-  {cat:'family', icon:'👨‍👩‍👧‍👦', label:'Family Gathering', size:''},
-  {cat:'couple', icon:'💑', label:'Couple Portrait', size:''},
-  {cat:'traditional', icon:'🕉️', label:'Temple Blessings', size:''},
-  {cat:'engagement', icon:'💐', label:'Ring Exchange', size:''},
-  {cat:'family', icon:'🙏', label:"Elders' Blessings", size:'w2'},
-  {cat:'couple', icon:'🌸', label:'Pre-Wedding Moments', size:'h2'},
-  {cat:'traditional', icon:'🪷', label:'Mangalsutra Ceremony', size:''},
-  {cat:'family', icon:'🎉', label:'Celebration Time', size:''},
-  {cat:'couple', icon:'✨', label:'Together Forever', size:''},
-  {cat:'engagement', icon:'🌺', label:'Floral Decor', size:''},
-];
-
-const masonry = document.getElementById('masonry');
-function renderGallery(filter){
-  masonry.innerHTML = '';
-  galleryItems.filter(i => filter==='all' || i.cat===filter).forEach(item => {
-    const div = document.createElement('div');
-    div.className = 'masonry-item ' + item.size;
-    div.innerHTML = `<div class="icon">${item.icon}</div><div class="cat-label">${item.label}</div>`;
-    div.onclick = () => openLightbox(item.label, item.cat.charAt(0).toUpperCase()+item.cat.slice(1));
-    masonry.appendChild(div);
-  });
-}
-renderGallery('all');
-
-document.querySelectorAll('.filter-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderGallery(btn.dataset.filter);
-  });
-});
 
 /* ===== LIGHTBOX ===== */
 function openLightbox(title, cat){
