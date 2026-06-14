@@ -488,8 +488,8 @@ img{max-width:100%;display:block;}
   color:var(--champagne);
   position:absolute;
 }
-.intro-quote::before{content:'“';top:-10px;left:0;}
-.intro-quote::after{content:'”';bottom:-30px;right:0;}
+.intro-quote::before{content:'"';top:-10px;left:0;}
+.intro-quote::after{content:'"';bottom:-30px;right:0;}
 
 @media(max-width:760px){
   .couple-grid{grid-template-columns:1fr;gap:3rem;}
@@ -539,9 +539,6 @@ img{max-width:100%;display:block;}
   font-size:1.4rem;
   color:var(--maroon);
   font-weight:600;
-}
-.journey-step:not(:last-child)::after{
-  content:'';
 }
 
 /* ============ FAMILIES ============ */
@@ -784,73 +781,6 @@ img{max-width:100%;display:block;}
 .lightbox-title{font-family:var(--font-display);font-size:1.5rem;color:var(--maroon);}
 .lightbox-cat{font-size:0.9rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--temple-gold);margin-top:0.5rem;}
 
-/* ============ WISHES WALL ============ */
-.wishes-section{background:var(--ivory);}
-.wishes-form{
-  max-width:600px;
-  margin:3rem auto;
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-}
-.wishes-form input, .wishes-form textarea{
-  font-family:var(--font-body);
-  font-size:1.05rem;
-  padding:0.9rem 1.2rem;
-  border:1px solid rgba(201,162,39,0.4);
-  border-radius:4px;
-  background:var(--beige);
-  color:var(--ink);
-  resize:vertical;
-}
-.wishes-form input:focus, .wishes-form textarea:focus{
-  outline:2px solid var(--champagne);
-  outline-offset:2px;
-}
-.wishes-wall{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.5rem;
-  margin-top:3rem;
-}
-.wish-card{
-  background:var(--beige);
-  border:1px solid rgba(201,162,39,0.3);
-  border-radius:6px;
-  padding:1.8rem;
-  position:relative;
-  opacity:0;
-  animation:wishIn 0.6s ease forwards;
-}
-@keyframes wishIn{
-  from{opacity:0;transform:translateY(20px) scale(0.97);}
-  to{opacity:1;transform:translateY(0) scale(1);}
-}
-.wish-text{font-style:italic;color:var(--ink);}
-.wish-name{
-  margin-top:1rem;
-  font-family:var(--font-display);
-  font-weight:600;
-  color:var(--maroon);
-  font-size:0.95rem;
-}
-.wish-card::before{
-  content:'❀';
-  position:absolute;
-  top:-12px;left:18px;
-  background:var(--ivory);
-  color:var(--champagne);
-  padding:0 6px;
-  border-radius:50%;
-  font-size:1rem;
-}
-@media(max-width:900px){
-  .wishes-wall{grid-template-columns:1fr 1fr;}
-}
-@media(max-width:600px){
-  .wishes-wall{grid-template-columns:1fr;}
-}
-
 /* ============ TRAVEL ============ */
 .travel-section{background:var(--beige);}
 .travel-grid{
@@ -912,47 +842,6 @@ img{max-width:100%;display:block;}
 .map-link:hover{color:var(--temple-gold);}
 @media(max-width:900px){
   .travel-grid{grid-template-columns:1fr;}
-}
-
-/* ============ CONTACT ============ */
-.contact-section{background:var(--ivory);}
-.contact-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.8rem;
-  margin-top:3rem;
-}
-.contact-card{
-  text-align:center;
-  background:var(--beige);
-  border:1px solid rgba(201,162,39,0.3);
-  border-radius:6px;
-  padding:2.4rem 1.5rem;
-  transition:transform 0.35s ease, box-shadow 0.35s ease;
-}
-.contact-card:hover{
-  transform:translateY(-6px);
-  box-shadow:0 14px 30px rgba(122,16,36,0.1);
-}
-.contact-icon{
-  font-size:2.2rem;
-  color:var(--champagne);
-  margin-bottom:1rem;
-}
-.contact-label{
-  font-family:var(--font-display);
-  font-size:1.1rem;
-  color:var(--maroon);
-  font-weight:600;
-}
-.contact-detail{
-  font-size:0.95rem;
-  color:var(--ink);
-  opacity:0.75;
-  margin-top:0.3rem;
-}
-@media(max-width:900px){
-  .contact-grid{grid-template-columns:1fr;}
 }
 
 /* ============ FOOTER ============ */
@@ -1062,9 +951,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   <div class="nav-logo">D ♥ P</div>
   <div class="nav-links">
     <a href="#celebrations">Celebrations</a>
-    <a href="#wishes">Wishes</a>
     <a href="#travel">Travel</a>
-    <a href="#contact">Contact</a>
   </div>
 </nav>
 
@@ -1294,22 +1181,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   </div>
 </div>
 
-<!-- WISHES -->
-<section class="section wishes-section" id="wishes">
-  <div class="center fade-up">
-    <div class="eyebrow">Share Your Joy</div>
-    <h2 class="section-title">Wishes &amp; Blessings</h2>
-    <div class="divider"></div>
-    <p style="max-width:520px;margin:1rem auto 0;font-style:italic;">Leave a blessing for Dhanush &amp; Pavithra as they begin their new journey together.</p>
-  </div>
-  <form class="wishes-form fade-up" id="wishForm" onsubmit="return addWish(event)">
-    <input type="text" id="wishName" placeholder="Your Name" required>
-    <textarea id="wishText" rows="3" placeholder="Your blessing or message..." required></textarea>
-    <button type="submit" class="btn solid" style="align-self:center;">Send Blessing</button>
-  </form>
-  <div class="wishes-wall" id="wishesWall"></div>
-</section>
-
 <!-- TRAVEL -->
 <section class="section travel-section" id="travel">
   <div class="center fade-up">
@@ -1349,33 +1220,6 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
       </ul>
       <a class="map-link" href="https://www.google.com/maps/search/?api=1&query=M.R.P.+Muthu+Hall+Omalur+Dharmapuri+Bypass+Salem" target="_blank" rel="noopener">Open in Google Maps →</a>
     </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section class="section contact-section" id="contact">
-  <div class="center fade-up">
-    <div class="eyebrow">We're Here to Help</div>
-    <h2 class="section-title">Wedding Assistance</h2>
-    <div class="divider"></div>
-    <p style="max-width:560px;margin:1rem auto 0;font-style:italic;">For venue directions, accommodation support, travel information, and celebration details, please reach out to us.</p>
-  </div>
-  <div class="contact-grid">
-    <a href="tel:+910000000000" class="contact-card fade-up d1">
-      <div class="contact-icon">📞</div>
-      <div class="contact-label">Call Us</div>
-      <div class="contact-detail">+91 00000 00000</div>
-    </a>
-    <a href="https://wa.me/910000000000" target="_blank" rel="noopener" class="contact-card fade-up d2">
-      <div class="contact-icon">💬</div>
-      <div class="contact-label">WhatsApp</div>
-      <div class="contact-detail">Message Us</div>
-    </a>
-    <a href="mailto:dhanush.pavithra.wedding@example.com" class="contact-card fade-up d3">
-      <div class="contact-icon">✉️</div>
-      <div class="contact-label">Email</div>
-      <div class="contact-detail">dhanush.pavithra.wedding@example.com</div>
-    </a>
   </div>
 </section>
 
@@ -1468,33 +1312,6 @@ function closeLightbox(){
 document.getElementById('lightbox').addEventListener('click', (e) => {
   if(e.target.id === 'lightbox') closeLightbox();
 });
-
-/* ===== WISHES WALL ===== */
-const wishesWall = document.getElementById('wishesWall');
-const sampleWishes = [
-  {name:'Uncle Manoharan', text:'May Lord Guruvayurappan bless you both with a lifetime of happiness, health, and togetherness.'},
-  {name:'Aunty Suguna', text:'Wishing the new couple endless love and a beautiful journey ahead. Congratulations!'},
-  {name:'Family Friends', text:'Two wonderful families coming together — wishing Dhanush and Pavithra a joyous new beginning.'}
-];
-sampleWishes.forEach(w => renderWish(w.name, w.text));
-
-function renderWish(name, text){
-  const card = document.createElement('div');
-  card.className = 'wish-card';
-  card.innerHTML = `<div class="wish-text">"${text}"</div><div class="wish-name">— ${name}</div>`;
-  wishesWall.prepend(card);
-}
-
-function addWish(e){
-  e.preventDefault();
-  const name = document.getElementById('wishName').value.trim();
-  const text = document.getElementById('wishText').value.trim();
-  if(name && text){
-    renderWish(name, text);
-    document.getElementById('wishForm').reset();
-  }
-  return false;
-}
 </script>
 
 </body>
