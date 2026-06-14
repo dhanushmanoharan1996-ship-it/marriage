@@ -634,14 +634,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-off
         <div class="inv-name">Wedding Invitation</div>
         <div class="inv-desc">Guruvayur Temple · 02 July 2026 · 8:00 AM</div>
         <div class="inv-actions">
-          <button class="inv-btn" onclick="alert('PDF download coming soon.')">
+          <a class="inv-btn" href="wedding_invitation.pdf" download="Dhanush_Pavithra_Wedding_Invitation.pdf">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download PDF
-          </button>
-          <button class="inv-btn" onclick="alert('Opening full invitation...')">
+          </a>
+          <a class="inv-btn" href="wedding_invitation.pdf" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             View Online
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -654,14 +654,14 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--bronze);outline-off
         <div class="inv-name">Reception Invitation</div>
         <div class="inv-desc">Mayiladuthurai · 06 July &amp; Salem · 10 July 2026</div>
         <div class="inv-actions">
-          <button class="inv-btn" onclick="alert('PDF download coming soon.')">
+          <a class="inv-btn" href="reception_invitation.pdf" download="Dhanush_Pavithra_Reception_Invitation.pdf">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download PDF
-          </button>
-          <button class="inv-btn" onclick="alert('Opening full invitation...')">
+          </a>
+          <a class="inv-btn" href="reception_invitation.pdf" target="_blank" rel="noopener">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
             View Online
-          </button>
+          </a>
         </div>
       </div>
     </div>
@@ -793,17 +793,193 @@ function closeD(){drawer.classList.remove('open');ham.classList.remove('x');docu
 ham.onclick=()=>{const o=drawer.classList.toggle('open');ham.classList.toggle('x',o);document.body.style.overflow=o?'hidden':'';}
 document.getElementById('drawerX').onclick=closeD;
 
-const wd=new Date('2026-07-02T08:00:00+05:30').getTime();
-function tick(){let r=wd-Date.now();if(r<0)r=0;document.getElementById('cd-d').textContent=String(r/864e5|0).padStart(2,'0');document.getElementById('cd-h').textContent=String(r/36e5%24|0).padStart(2,'0');document.getElementById('cd-m').textContent=String(r/6e4%60|0).padStart(2,'0');document.getElementById('cd-s').textContent=String(r/1e3%60|0).padStart(2,'0');}
+/* ── COUNTDOWN ── */
+const D0=new Date('2026-07-02T00:00:00+05:30');
+const D1=new Date('2026-07-02T23:59:59+05:30');
+const D2=new Date('2026-07-06T00:00:00+05:30');
+const D3=new Date('2026-07-06T23:59:59+05:30');
+const D4=new Date('2026-07-10T00:00:00+05:30');
+const D5=new Date('2026-07-10T23:59:59+05:30');
+const WEDDING=new Date('2026-07-02T08:00:00+05:30').getTime();
+const MSGS=[
+  [null,D0,'Counting down to our special day.'],
+  [D0,D1,'Today is our Wedding Day. 🪔'],
+  [D1,D2,'Thank you for joining our Wedding Ceremony. We look forward to celebrating with you at our Reception.'],
+  [D2,D3,'Reception Celebration in Mayiladuthurai today. 🌸'],
+  [D3,D4,'We look forward to welcoming you to our Salem Reception.'],
+  [D4,D5,'Reception Celebration in Salem today. 🎉'],
+  [D5,null,'Thank you for being part of our journey and sharing your blessings.']
+];
+function getStatus(){
+  const now=new Date();
+  for(const [from,to,msg] of MSGS){
+    if((!from||now>=from)&&(!to||now<to)) return msg;
+  }
+  return MSGS[MSGS.length-1][2];
+}
+function tick(){
+  let r=WEDDING-Date.now();if(r<0)r=0;
+  document.getElementById('cd-d').textContent=String(r/864e5|0).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(r/36e5%24|0).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(r/6e4%60|0).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(r/1e3%60|0).padStart(2,'0');
+  document.getElementById('cds-msg').textContent=getStatus();
+}
 tick();setInterval(tick,1000);
 
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');e.target.classList.add('visible');}}),{threshold:.12});
+/* ── SCROLL REVEAL ── */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');}}),{threshold:.1});
 document.querySelectorAll('.reveal,.jstep').forEach(el=>obs.observe(el));
 
+/* ── CALENDAR ── */
 function cal(t,s,e,l,d){window.open(`https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(t)}&dates=${s}/${e}&location=${encodeURIComponent(l)}&details=${encodeURIComponent(d)}`,'_blank');}
 
+/* ── LIGHTBOX ── */
 function closeLB(){document.getElementById('lb').classList.remove('on');}
 document.getElementById('lb').addEventListener('click',e=>{if(e.target.id==='lb')closeLB();});
+
+/* ── COPY LINK ── */
+function copyLink(){
+  navigator.clipboard.writeText(window.location.href).catch(()=>{});
+  const t=document.getElementById('copyToast');
+  t.style.display='inline';
+  setTimeout(()=>t.style.display='none',2500);
+}
+
+/* ── MUSIC PLAYER ── */
+/* ── MUSIC PLAYER (real Audio API) ── */
+const tracks=[
+  {
+    title:'Nadaswaram — Navagraha Kritis',
+    style:'Nadaswaram · Traditional Mangalam',
+    emoji:'🎺',
+    src:'https://archive.org/download/NadaswaramNavagrahaKritis/01NavagrahaKritis-Suryamurthe.mp3'
+  },
+  {
+    title:'Veena — Raga Kalyani',
+    style:'Veena Instrumental · Carnatic Classical',
+    emoji:'🪕',
+    src:'https://archive.org/download/VeenaRagaKalyani/VeenaRagaKalyani.mp3'
+  },
+  {
+    title:'Carnatic Flute — Raga Bhairavi',
+    style:'Bansuri Flute · Carnatic',
+    emoji:'🎶',
+    src:'https://archive.org/download/CarnaticFluteBhairavi/CarnaticFluteBhairavi.mp3'
+  },
+  {
+    title:'Temple Bells & Chants',
+    style:'Sacred Soundscape · Devotional',
+    emoji:'🔔',
+    src:'https://archive.org/download/TempleBellsAndChants/TempleBellsChants.mp3'
+  },
+  {
+    title:'Sitar — Raga Yaman',
+    style:'Sitar Instrumental · Evening Raga',
+    emoji:'🎻',
+    src:'https://archive.org/download/SitarRagaYaman/SitarRagaYaman.mp3'
+  }
+];
+
+let cur=0, aud=null, seeking=false;
+const tl=document.getElementById('trackList');
+const progFill=document.getElementById('progFill');
+const progBar=document.getElementById('progBar');
+const playBtn=document.getElementById('playBtn');
+const volSlider=document.getElementById('volSlider');
+const gramRing=document.getElementById('gramRing');
+const nowTitle=document.getElementById('nowTitle');
+const nowStyle=document.getElementById('nowStyle');
+const gramIco=gramRing.querySelector('.gram-ico');
+
+function createAudio(src){
+  if(aud){aud.pause();aud.src='';}
+  aud=new Audio();
+  aud.crossOrigin='anonymous';
+  aud.volume=volSlider.value/100;
+  aud.src=src;
+  aud.addEventListener('timeupdate',()=>{
+    if(!seeking&&aud.duration){
+      progFill.style.width=(aud.currentTime/aud.duration*100)+'%';
+    }
+  });
+  aud.addEventListener('ended',()=>nextTrack());
+  aud.addEventListener('error',()=>{
+    nowStyle.textContent='⚠ Could not load — trying next track…';
+    setTimeout(()=>nextTrack(),1800);
+  });
+}
+
+function loadTrack(i,autoplay){
+  cur=i;
+  const t=tracks[i];
+  nowTitle.textContent=t.title;
+  nowStyle.textContent=t.style;
+  gramIco.textContent=t.emoji;
+  progFill.style.width='0%';
+  createAudio(t.src);
+  if(autoplay){
+    aud.play().catch(()=>{nowStyle.textContent='⚠ Playback blocked — tap Play to try again.';});
+    gramRing.classList.add('spinning');
+    playBtn.innerHTML='&#9646;&#9646;';
+  } else {
+    gramRing.classList.remove('spinning');
+    playBtn.innerHTML='&#9654;';
+  }
+  renderTracks();
+}
+
+function togglePlay(){
+  if(!aud||aud.src===''){loadTrack(cur,true);return;}
+  if(aud.paused){
+    aud.play().catch(()=>{});
+    gramRing.classList.add('spinning');
+    playBtn.innerHTML='&#9646;&#9646;';
+  } else {
+    aud.pause();
+    gramRing.classList.remove('spinning');
+    playBtn.innerHTML='&#9654;';
+  }
+}
+
+function nextTrack(){loadTrack((cur+1)%tracks.length, aud&&!aud.paused);}
+function prevTrack(){loadTrack((cur-1+tracks.length)%tracks.length, aud&&!aud.paused);}
+function setVol(v){if(aud)aud.volume=v/100;}
+
+function seekTrack(e){
+  if(!aud||!aud.duration)return;
+  const r=progBar.getBoundingClientRect();
+  const pct=Math.min(1,Math.max(0,(e.clientX-r.left)/r.width));
+  aud.currentTime=pct*aud.duration;
+  progFill.style.width=(pct*100)+'%';
+}
+
+function renderTracks(){
+  tl.innerHTML='';
+  tracks.forEach((t,i)=>{
+    const isActive=i===cur;
+    const isPlaying=isActive&&aud&&!aud.paused;
+    const d=document.createElement('div');
+    d.className='track-item'+(isActive?' active':'')+(isPlaying?' playing':'');
+    d.innerHTML=`
+      <span class="track-num">${i+1}</span>
+      <div class="track-eq">
+        <div class="teq" style="--h:12px;animation-duration:.7s;"></div>
+        <div class="teq" style="--h:7px;animation-duration:.9s;"></div>
+        <div class="teq" style="--h:14px;animation-duration:.6s;"></div>
+        <div class="teq" style="--h:5px;animation-duration:1.1s;"></div>
+      </div>
+      <div class="track-info">
+        <div class="track-n">${t.title}</div>
+        <div class="track-s">${t.style}</div>
+      </div>`;
+    d.onclick=()=>loadTrack(i,true);
+    tl.appendChild(d);
+  });
+}
+
+/* init — show first track but don't autoplay */
+loadTrack(0,false);
 </script>
 </body>
 </html>
